@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nanfeng.mapper.ClassMapper">
+
+    <resultMap id="BaseResultMap" type="com.nanfeng.pojo.Class">
+            <id property="classId" column="class_id" jdbcType="INTEGER"/>
+            <result property="className" column="class_name" jdbcType="VARCHAR"/>
+            <result property="collegeId" column="college_id" jdbcType="INTEGER"/>
+            <result property="classTeacher" column="class_teacher" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        class_id,class_name,college_id,
+        class_teacher
+    </sql>
+</mapper>

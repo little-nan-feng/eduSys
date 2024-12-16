@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nanfeng.mapper.CourseMapper">
+
+    <resultMap id="BaseResultMap" type="com.nanfeng.pojo.Course">
+            <id property="cId" column="c_id" jdbcType="INTEGER"/>
+            <result property="cName" column="c_name" jdbcType="VARCHAR"/>
+            <result property="cTeacherId" column="c_teacher_id" jdbcType="VARCHAR"/>
+            <result property="cLocation" column="c_location" jdbcType="VARCHAR"/>
+            <result property="cCredit" column="c_credit" jdbcType="INTEGER"/>
+            <result property="cHours" column="c_hours" jdbcType="INTEGER"/>
+            <result property="cType" column="c_type" jdbcType="VARCHAR"/>
+            <result property="cTime" column="c_time" jdbcType="DATE"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        c_id,c_name,c_teacher_id,
+        c_location,c_credit,c_hours,
+        c_type,c_time
+    </sql>
+</mapper>
