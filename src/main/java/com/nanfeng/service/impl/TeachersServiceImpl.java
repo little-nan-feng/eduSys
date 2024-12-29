@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mysql.jdbc.StringUtils;
 import com.nanfeng.pojo.Teachers;
+import com.nanfeng.pojo.User;
 import com.nanfeng.service.TeachersService;
 import com.nanfeng.mapper.TeachersMapper;
 import com.nanfeng.utils.JwtHelper;
@@ -32,26 +33,35 @@ public class TeachersServiceImpl extends ServiceImpl<TeachersMapper, Teachers>
     JwtHelper jwtHelper;
 
     @Override
-    public Result login(Teachers teachers) {
+    public Result login(User user) {
 
         LambdaQueryWrapper<Teachers> lambdaQueryWrapper = new LambdaQueryWrapper();
-        lambdaQueryWrapper.eq(Teachers::getTId, teachers.getTId());
+        lambdaQueryWrapper.eq(Teachers::getTId, user.getId());
         Teachers loginTeacher = teachersMapper.selectOne(lambdaQueryWrapper);
 
         if (loginTeacher == null) {
             return Result.build(null, ResultCodeEnum.ACCOUNT_ERROR);
         }
 
-        if (!StringUtils.isNullOrEmpty(teachers.getTPassword())
-                && MD5Util.encrypt(teachers.getTPassword()).equals(loginTeacher.getTPassword())) {
+        if (!StringUtils.isNullOrEmpty(user.getPassword())
+                && MD5Util.encrypt(user.getPassword()).equals(loginTeacher.getTPassword())) {
 //            登录成功
-            String token = jwtHelper.createToken(teachers.getTId());
+            String token = jwtHelper.createToken(loginTeacher.getTId());
 
-            Map data=new HashMap<>();
-            data.put("token",token);
+            Map data = new HashMap<>();
+            data.put("token", token);
+
+//            判断是否记住密码--是 则直接返回用户数据
+            if (user.isChecked() == true) {
+                loginTeacher.setTPassword(user.getPassword());
+                data.put("user", loginTeacher);
+            } else {
+                //返回之前要把密码置空
+                loginTeacher.setTPassword(null);
+                data.put("user", loginTeacher);
+            }
 
             return Result.ok(data);
-
         }
         return Result.build(null, ResultCodeEnum.PASSWORD_ERROR);
     }
@@ -61,7 +71,7 @@ public class TeachersServiceImpl extends ServiceImpl<TeachersMapper, Teachers>
 
 //        先判断token是否有效 true过期
         boolean isExpiration = jwtHelper.checkToken(token);
-        if (isExpiration){
+        if (isExpiration) {
             return Result.build(null, ResultCodeEnum.NOTLOGIN);
         }
 
@@ -69,8 +79,8 @@ public class TeachersServiceImpl extends ServiceImpl<TeachersMapper, Teachers>
 
         Teachers teachers = teachersMapper.selectById(tId);
         teachers.setTPassword("");
-        Map data=new HashMap<>();
-        data.put("loginTeacher",teachers);
+        Map data = new HashMap<>();
+        data.put("loginTeacher", teachers);
 
         return Result.ok(data);
     }

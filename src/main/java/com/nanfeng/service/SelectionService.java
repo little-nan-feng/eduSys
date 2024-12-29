@@ -2,6 +2,7 @@ package com.nanfeng.service;
 
 import com.nanfeng.pojo.Selection;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.nanfeng.utils.Result;
 
 /**
 * @author 29465
@@ -10,4 +11,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface SelectionService extends IService<Selection> {
 
+    Result getSelection(String id);
+
+    Result setSelection(String sid, Integer cid);
+
+    Result deleteSelection(String sid, Integer cid);
 }

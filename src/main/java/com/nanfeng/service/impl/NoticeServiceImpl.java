@@ -2,12 +2,12 @@ package com.nanfeng.service.impl;
 
 import com.alibaba.excel.EasyExcel;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.nanfeng.pojo.Notice;
 import com.nanfeng.service.NoticeService;
 import com.nanfeng.mapper.NoticeMapper;
 import com.nanfeng.utils.ExcelListener;
-import com.nanfeng.utils.ExcelUtil;
 import com.nanfeng.utils.Result;
 import com.nanfeng.utils.ResultCodeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -31,14 +29,11 @@ public class NoticeServiceImpl extends ServiceImpl<NoticeMapper, Notice>
     @Autowired
     private NoticeMapper noticeMapper;
 
-    @Autowired
-    private ExcelUtil excelUtil;
-
     @Override
-    public Result getAllNotice() {
+    public Result getAllNotice(Integer pageNum,Integer pageSize) {
 
         LambdaQueryWrapper<Notice> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        List<Notice> notices = noticeMapper.selectList(lambdaQueryWrapper);
+        Page<Notice> notices = noticeMapper.selectPage(new Page<>(pageNum, pageSize), lambdaQueryWrapper);
         return Result.ok(notices);
     }
 

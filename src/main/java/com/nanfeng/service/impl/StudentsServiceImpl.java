@@ -1,10 +1,22 @@
 package com.nanfeng.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.mysql.jdbc.StringUtils;
+import com.nanfeng.pojo.Admin;
 import com.nanfeng.pojo.Students;
+import com.nanfeng.pojo.User;
 import com.nanfeng.service.StudentsService;
 import com.nanfeng.mapper.StudentsMapper;
+import com.nanfeng.utils.JwtHelper;
+import com.nanfeng.utils.MD5Util;
+import com.nanfeng.utils.Result;
+import com.nanfeng.utils.ResultCodeEnum;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
 * @author 29465
@@ -15,6 +27,44 @@ import org.springframework.stereotype.Service;
 public class StudentsServiceImpl extends ServiceImpl<StudentsMapper, Students>
     implements StudentsService{
 
+    @Autowired
+    private StudentsMapper studentsMapper;
+
+    @Autowired
+    private JwtHelper jwtHelper;
+
+    @Override
+    public Result login(User user) {
+        LambdaQueryWrapper<Students> lambdaQueryWrapper = new LambdaQueryWrapper();
+        lambdaQueryWrapper.eq(Students::getSId, user.getId());
+        Students loginStudent = studentsMapper.selectOne(lambdaQueryWrapper);
+
+        if (loginStudent == null) {
+            return Result.build(null, ResultCodeEnum.ACCOUNT_ERROR);
+        }
+
+        if (!StringUtils.isNullOrEmpty(user.getPassword()) &&                MD5Util.encrypt(user.getPassword())
+                        .equals(loginStudent.getSPassword())) {
+//            登录成功
+            String token = jwtHelper.createToken(loginStudent.getSId());
+
+            Map data = new HashMap<>();
+            data.put("token", token);
+
+            //判断是否记住密码--是 则直接返回用户数据
+            if (user.isChecked() == true) {
+                loginStudent.setSPassword(user.getPassword());
+                data.put("user",loginStudent);
+            } else {
+                //返回之前要把密码置空
+                loginStudent.setSPassword(null);
+                data.put("user",loginStudent);
+            }
+
+            return Result.ok(data);
+        }
+        return Result.build(null, ResultCodeEnum.PASSWORD_ERROR);
+    }
 }
 
 

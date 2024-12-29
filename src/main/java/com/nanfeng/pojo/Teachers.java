@@ -16,7 +16,7 @@ import lombok.Data;
 @TableName(value ="teachers")
 @Data
 public class Teachers implements Serializable {
-    @JsonProperty("account")
+
     @TableId
     private String tId;
 
@@ -28,7 +28,7 @@ public class Teachers implements Serializable {
 
     private Object tDegree;
 
-    @JsonProperty("psd")
+
     private String tPassword;
 
     private String tTelephone;

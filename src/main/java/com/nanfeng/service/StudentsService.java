@@ -2,6 +2,8 @@ package com.nanfeng.service;
 
 import com.nanfeng.pojo.Students;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.nanfeng.utils.Result;
+import com.nanfeng.pojo.User;
 
 /**
 * @author 29465
@@ -10,4 +12,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface StudentsService extends IService<Students> {
 
+    Result login(User user);
 }

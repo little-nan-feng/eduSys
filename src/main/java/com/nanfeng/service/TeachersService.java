@@ -2,6 +2,7 @@ package com.nanfeng.service;
 
 import com.nanfeng.pojo.Teachers;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.nanfeng.pojo.User;
 import com.nanfeng.utils.Result;
 
 /**
@@ -12,7 +13,7 @@ import com.nanfeng.utils.Result;
 public interface TeachersService extends IService<Teachers> {
 
 //    登录
-    Result login(Teachers teachers);
+    Result login(User user);
 
 //    根据token获取教师信息
     Result getTeacher(String token);

@@ -2,6 +2,7 @@ package com.nanfeng.service;
 
 import com.nanfeng.pojo.Admin;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.nanfeng.pojo.User;
 import com.nanfeng.utils.Result;
 
 /**
@@ -12,5 +13,6 @@ import com.nanfeng.utils.Result;
 public interface AdminService extends IService<Admin> {
 
 //    管理员登录
+    Result login(User user);
 
 }

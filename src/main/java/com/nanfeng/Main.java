@@ -23,6 +23,7 @@ public class Main {
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+//        分页插件
         interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));//分页功能
         //interceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor());//乐观锁
 

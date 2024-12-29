@@ -17,7 +17,7 @@ import java.util.List;
 */
 public interface NoticeService extends IService<Notice> {
 
-    Result getAllNotice();
+    Result getAllNotice(Integer pageNum,Integer pageSize);
 
     Result setNotice(Notice notice);
 
