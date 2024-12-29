@@ -1,0 +1,31 @@
+
+#server配置
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+#连接池
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/edu_sys?useSSL=false&serverTimezone=UTC
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+  jackson:
+    date-format: yyyy-MM-dd
+    time-zone: GMT+8
+
+#mybatis-plus配置
+mybatis-plus:
+  type-aliases-package: com.nanfeng.pojo
+  global-config:
+    db-config:
+      id-type: auto
+      insert-ignore-auto-increment-column: true
+
+#jwt配置
+jwt:
+  token:
+    tokenExpiration: 7 #配置后这里表示有效期为7天
+    tokenSignKey: edusys123456 #配置后这里表示秘钥为edu_sys123456

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nanfeng.mapper.TeachersMapper">
+
+    <resultMap id="BaseResultMap" type="com.nanfeng.pojo.Teachers">
+            <id property="tId" column="t_id" jdbcType="VARCHAR"/>
+            <result property="tName" column="t_name" jdbcType="VARCHAR"/>
+            <result property="tGender" column="t_gender" jdbcType="OTHER"/>
+            <result property="tBirthday" column="t_birthday" jdbcType="DATE"/>
+            <result property="tDegree" column="t_degree" jdbcType="OTHER"/>
+            <result property="tPassword" column="t_password" jdbcType="VARCHAR"/>
+            <result property="tTelephone" column="t_telephone" jdbcType="VARCHAR"/>
+            <result property="tPolitic" column="t_politic" jdbcType="OTHER"/>
+            <result property="tAdmissionYear" column="t_admission_year" jdbcType="VARCHAR"/>
+            <result property="tCollege" column="t_college" jdbcType="INTEGER"/>
+            <result property="tWorkTime" column="t_work_time" jdbcType="VARCHAR"/>
+            <result property="tTitle" column="t_title" jdbcType="OTHER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        t_id,t_name,t_gender,
+        t_birthday,t_degree,t_password,
+        t_telephone,t_politic,t_admission_year,
+        t_college,t_work_time,t_title
+    </sql>
+</mapper>
