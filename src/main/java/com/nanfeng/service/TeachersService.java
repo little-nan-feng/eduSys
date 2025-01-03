@@ -17,4 +17,14 @@ public interface TeachersService extends IService<Teachers> {
 
 //    根据token获取教师信息
     Result getTeacher(String token);
+
+    Result getAllTeacher(Integer pageNum,Integer pageSize);
+
+    Result createTeacher(Teachers teacher);
+
+    Result updateTeacher(Teachers teacher);
+
+    Result checkUsed(Integer id);
+
+    Result deleteTeacher(Integer id);
 }

@@ -2,6 +2,7 @@ package com.nanfeng.service;
 
 import com.nanfeng.pojo.College;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.nanfeng.utils.Result;
 
 /**
 * @author 29465
@@ -10,4 +11,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface CollegeService extends IService<College> {
 
+    Result getCollege();
 }

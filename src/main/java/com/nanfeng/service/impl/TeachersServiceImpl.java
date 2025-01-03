@@ -1,6 +1,7 @@
 package com.nanfeng.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mysql.jdbc.StringUtils;
 import com.nanfeng.pojo.Teachers;
@@ -83,6 +84,53 @@ public class TeachersServiceImpl extends ServiceImpl<TeachersMapper, Teachers>
         data.put("loginTeacher", teachers);
 
         return Result.ok(data);
+    }
+
+    @Override
+    public Result getAllTeacher(Integer pageNum, Integer pageSize) {
+
+        Page<Teachers> page = teachersMapper.selectPage(new Page<>(pageNum, pageSize), null);
+        return Result.ok(page);
+    }
+
+    @Override
+    public Result createTeacher(Teachers teacher) {
+
+        System.out.println(teacher);
+        teacher.setTPassword(MD5Util.encrypt(teacher.getTPassword()));
+//        这里还有点问题-
+        int i = teachersMapper.insert(teacher);
+        return Result.build(i, ResultCodeEnum.SUCCESS);
+    }
+
+    @Override
+    public Result updateTeacher(Teachers teacher) {
+
+        System.out.println(teacher);
+//        teacher.setTPassword(MD5Util.encrypt(teacher.getTPassword()));
+        int i = teachersMapper.updateById(teacher);
+        return Result.build(i, ResultCodeEnum.SUCCESS);
+    }
+
+    @Override
+    public Result checkUsed(Integer id) {
+
+        LambdaQueryWrapper<Teachers> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(Teachers::getTId, id);
+        Teachers teacher = teachersMapper.selectOne(lambdaQueryWrapper);
+        if (teacher != null) {
+            return Result.build(null, ResultCodeEnum.ISUSED);
+        }
+        return null;
+    }
+
+    @Override
+    public Result deleteTeacher(Integer id) {
+
+        LambdaQueryWrapper<Teachers> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(Teachers::getTId, id);
+        int i = teachersMapper.delete(lambdaQueryWrapper);
+        return Result.build(i,ResultCodeEnum.SUCCESS);
     }
 }
 

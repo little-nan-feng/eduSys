@@ -55,4 +55,37 @@ public class userController {
         Result result = teachersService.getTeacher(token);
         return result;
     }
+
+    @GetMapping("getTeacher")
+    public Result getTeacher(@RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize") Integer pageSize) {
+
+        Result result = teachersService.getAllTeacher(pageNum, pageSize);
+        return result;
+    }
+
+    @PostMapping("createTeacher")
+    public Result createTeacher(@RequestBody Teachers teacher) {
+
+        Result result = teachersService.createTeacher(teacher);
+        return result;
+    }
+
+    @PutMapping("updateTeacher")
+    public Result updateTeacher(@RequestBody Teachers teacher) {
+
+        Result result = teachersService.updateTeacher(teacher);
+        return result;
+    }
+
+    @GetMapping("checkUsed")
+    public Result checkUsed(@RequestParam("id") Integer id) {
+        Result result = teachersService.checkUsed(id);
+        return result;
+    }
+
+    @DeleteMapping("deleteTeacher")
+    public Result deleteTeacher(@RequestParam("id") Integer id) {
+        Result result = teachersService.deleteTeacher(id);
+        return result;
+    }
 }

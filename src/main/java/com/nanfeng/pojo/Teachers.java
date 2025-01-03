@@ -28,7 +28,6 @@ public class Teachers implements Serializable {
 
     private Object tDegree;
 
-
     private String tPassword;
 
     private String tTelephone;

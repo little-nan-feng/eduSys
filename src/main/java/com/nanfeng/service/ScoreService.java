@@ -2,6 +2,7 @@ package com.nanfeng.service;
 
 import com.nanfeng.pojo.Score;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.nanfeng.utils.Result;
 
 /**
 * @author 29465
@@ -10,4 +11,13 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface ScoreService extends IService<Score> {
 
+    Result getScore();
+
+    Result deleteScore(String sid, String cid);
+
+    Result getScoreTea(String tid);
+
+    Result createScore(Score score);
+
+    Result getScoreStu(String sid);
 }
