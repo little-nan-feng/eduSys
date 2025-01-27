@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nanfeng.mapper.AttendMapper">
+
+    <resultMap id="BaseResultMap" type="com.nanfeng.pojo.Attend">
+            <id property="aId" column="a_id" jdbcType="INTEGER"/>
+            <result property="aCourse" column="a_course" jdbcType="VARCHAR"/>
+            <result property="aTea" column="a_tea" jdbcType="VARCHAR"/>
+            <result property="aStu" column="a_stu" jdbcType="VARCHAR"/>
+            <result property="aTime" column="a_time" jdbcType="DATE"/>
+            <result property="aStatus" column="a_status" jdbcType="OTHER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        a_id,a_course,a_tea,
+        a_stu,a_time,a_status
+    </sql>
+</mapper>
