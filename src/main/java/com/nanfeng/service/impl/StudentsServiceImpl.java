@@ -1,6 +1,7 @@
 package com.nanfeng.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mysql.jdbc.StringUtils;
 import com.nanfeng.pojo.Admin;
@@ -14,8 +15,11 @@ import com.nanfeng.utils.Result;
 import com.nanfeng.utils.ResultCodeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.w3c.dom.stylesheets.LinkStyle;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -64,6 +68,43 @@ public class StudentsServiceImpl extends ServiceImpl<StudentsMapper, Students>
             return Result.ok(data);
         }
         return Result.build(null, ResultCodeEnum.PASSWORD_ERROR);
+    }
+
+    @Override
+    public Result getAllStudent(Integer pageNum, Integer pageSize) {
+
+        Page<Students> studentsPage = studentsMapper.selectPage(new Page<>(pageNum,pageSize), null);
+        return Result.ok(studentsPage);
+    }
+
+    @Override
+    public Result deleteStudent(String id) {
+
+        LambdaQueryWrapper<Students> lambdaQueryWrapper = new LambdaQueryWrapper();
+        lambdaQueryWrapper.eq(Students::getSId,id);
+        int i = studentsMapper.delete(lambdaQueryWrapper);
+        return Result.build(i,ResultCodeEnum.SUCCESS);
+    }
+
+    @Override
+    public Result StuGetInfo(String sid) {
+
+        LambdaQueryWrapper<Students> lambdaQueryWrapper = new LambdaQueryWrapper();
+        lambdaQueryWrapper.eq(Students::getSId,sid);
+        Students students = studentsMapper.selectOne(lambdaQueryWrapper);
+
+        List<Students> student=new ArrayList<>();
+        student.add(students);
+        return Result.ok(student);
+    }
+
+    @Override
+    public Result updateStudent(Students student) {
+
+        LambdaQueryWrapper<Students> lambdaQueryWrapper=new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(Students::getSId,student.getSId());
+        int i = studentsMapper.update(student, lambdaQueryWrapper);
+        return Result.build(i,ResultCodeEnum.SUCCESS);
     }
 }
 

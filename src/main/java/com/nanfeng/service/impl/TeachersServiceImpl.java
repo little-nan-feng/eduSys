@@ -12,10 +12,13 @@ import com.nanfeng.utils.JwtHelper;
 import com.nanfeng.utils.MD5Util;
 import com.nanfeng.utils.Result;
 import com.nanfeng.utils.ResultCodeEnum;
+import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -106,9 +109,9 @@ public class TeachersServiceImpl extends ServiceImpl<TeachersMapper, Teachers>
     @Override
     public Result updateTeacher(Teachers teacher) {
 
-        System.out.println(teacher);
-//        teacher.setTPassword(MD5Util.encrypt(teacher.getTPassword()));
-        int i = teachersMapper.updateById(teacher);
+        LambdaQueryWrapper<Teachers> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(Teachers::getTId, teacher.getTId());
+        int i = teachersMapper.update(teacher,lambdaQueryWrapper);
         return Result.build(i, ResultCodeEnum.SUCCESS);
     }
 
@@ -131,6 +134,17 @@ public class TeachersServiceImpl extends ServiceImpl<TeachersMapper, Teachers>
         lambdaQueryWrapper.eq(Teachers::getTId, id);
         int i = teachersMapper.delete(lambdaQueryWrapper);
         return Result.build(i,ResultCodeEnum.SUCCESS);
+    }
+
+    @Override
+    public Result TeaGetInfo(String tid) {
+
+        LambdaQueryWrapper<Teachers> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(Teachers::getTId, tid);
+        Teachers teachers = teachersMapper.selectOne(lambdaQueryWrapper);
+        List<Teachers> teachersList=new ArrayList<>();
+        teachersList.add(teachers);
+        return Result.ok(teachersList);
     }
 }
 

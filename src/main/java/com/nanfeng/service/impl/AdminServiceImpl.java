@@ -16,7 +16,9 @@ import com.nanfeng.utils.ResultCodeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,17 +34,16 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin>
     private JwtHelper jwtHelper;
 
     @Autowired
-    private AdminMapper AdminMapper;
+    private AdminMapper adminMapper;
 
     @Autowired
     private TeachersMapper teachersMapper;
-
 
     @Override
     public Result login(User user) {
         LambdaQueryWrapper<Admin> lambdaQueryWrapper = new LambdaQueryWrapper();
         lambdaQueryWrapper.eq(Admin::getTId, user.getId());
-        Admin loginAdmin = AdminMapper.selectOne(lambdaQueryWrapper);
+        Admin loginAdmin = adminMapper.selectOne(lambdaQueryWrapper);
 
         if (loginAdmin == null) {
             return Result.build(null, ResultCodeEnum.ACCOUNT_ERROR);
@@ -74,6 +75,22 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin>
             return Result.ok(data);
         }
         return Result.build(null, ResultCodeEnum.PASSWORD_ERROR);
+    }
+
+//    获取管理员信息
+    @Override
+    public Result getAdmin() {
+
+        List<Admin> admins = adminMapper.selectList(null);
+        List<Teachers> adminList=new ArrayList<>();
+
+        for (Admin admin : admins) {
+
+            Teachers teacherAdmin = teachersMapper.selectById(admin.getTId());
+            adminList.add(teacherAdmin);
+        }
+        
+        return Result.ok(adminList);
     }
 }
 

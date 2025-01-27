@@ -13,4 +13,12 @@ import com.nanfeng.pojo.User;
 public interface StudentsService extends IService<Students> {
 
     Result login(User user);
+
+    Result getAllStudent(Integer pageNum, Integer pageSize);
+
+    Result deleteStudent(String id);
+
+    Result StuGetInfo(String sid);
+
+    Result updateStudent(Students student);
 }

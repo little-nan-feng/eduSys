@@ -27,4 +27,6 @@ public interface TeachersService extends IService<Teachers> {
     Result checkUsed(Integer id);
 
     Result deleteTeacher(Integer id);
+
+    Result TeaGetInfo(String tid);
 }

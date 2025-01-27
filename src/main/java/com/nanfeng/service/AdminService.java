@@ -15,4 +15,5 @@ public interface AdminService extends IService<Admin> {
 //    管理员登录
     Result login(User user);
 
+    Result getAdmin();
 }
